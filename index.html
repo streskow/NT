@@ -64,10 +64,15 @@
             position: relative;
             overflow: hidden;
             border-radius: 8px;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .gallery-item img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: contain;
             display: block;
         }
         .ficha {
@@ -118,9 +123,49 @@
             font-size: 18px;
         }
         .catalog-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px; }
-.catalog-card { background: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center; text-decoration: none; color: inherit; transition: transform 0.2s ease; }
+.catalog-card { background: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center; color: inherit; transition: transform 0.2s ease; }
 .catalog-card:hover { transform: scale(1.02); }
-.catalog-card img { width: 100%; border-radius: 8px; }
+.catalog-card img { 
+            width: 100%; 
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px; 
+            display: block;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #000000;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            width: 100%;
+        }
+        footer h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        footer .contact-info {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        footer .contact-info p {
+            color: white;
+        }
+        footer .contact-info a {
+            color: white;
+            text-decoration: underline;
+        }
+        footer .contact-info a:hover {
+            color: #cccccc;
+        }
+        .textos-card {
+            display: inline-block;
+            text-decoration: none;
+        }
+        .textos-card img:hover {
+            transform: scale(1.05);
+        }
 
 
 </style>
@@ -131,8 +176,8 @@
         <nav>
             <a href="#portafolio">Portafolio</a>
             <a href="#statement">Statement</a>
+            <a href="#revistaobra">RevistaObra</a>
             <a href="#catalogos">Exposiciones</a>
-            <a href="#contacto, .footer">Contacto</a>
         </nav>
         
     </header>
@@ -144,37 +189,42 @@
             <h2>Portafolio</h2>
             <div class="gallery">
                 <div class="gallery-item">
-                    <img src="Obra1.png" alt="Obra 1">
+                    <img src="images/Obra1.png" alt="Obra 1">
                     <div class="ficha">Cuerpo De-Presión, escultura, tela y metal, 200 x 70 cm, 2025.</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="Obra2.png" alt="Obra 2">
+                    <img src="images/Obra2.png" alt="Obra 2">
                     <div class="ficha">Colegio Católico, escultura, metal, telas, cemento y madera, 2025.</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="Obra3.JPG" alt="Obra 3">
+                    <img src="images/Obra3.JPG" alt="Obra 3">
                     <div class="ficha">¿Cómo me explico la muerte?, escultura, madera, metal, telas, tierra y rama de enredadera, 2025.</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="Obra5.png" alt="Obra 4">
+                    <img src="images/Obra5.png" alt="Obra 4">
                     <div class="ficha">Tenerte, escultura blanda, retazos de ropa y relleno sintético, 170 x 60 cm, 2025.</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="Obra6.jpg" alt="Obra 5">
+                    <img src="images/Obra6.jpg" alt="Obra 5">
                     <div class="ficha">Hablo de ti, escultura instalativa, tela y relleno sintético, 2024.</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="Obra7.jpg" alt="Obra 6">
+                    <img src="images/Obra7.jpg" alt="Obra 6">
                     <div class="ficha">Percusión industrial, escultura interactiva, madera, circuito eléctrico, tornillos y martillo, 2024.</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="Obra8.JPG" alt="Obra 7">
+                    <img src="images/Obra8.JPG" alt="Obra 7">
                     <div class="ficha">Ventilar el sonido, escultura interactiva, aspas de ventilador, circuito electrónico y madera, 2024.</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="Obra4.png" alt="Obra 8">
+                    <img src="images/Obra4.png" alt="Obra 8">
                     <div class="ficha">Aquí comienzan mis quebrantos (Colaboración con Florencia Hernandez y Francesca Villarroel) Instalación en exposición “La estrella con su contorno/ la piedra con su reflejo", telas y bordados, 2025.</div>
                 </div>
+            </div>
+            <div style="margin-top: 40px; text-align: center;">
+                <a href="pdfs/portafolio.pdf" target="_blank" style="display: inline-block; padding: 12px 24px; background-color: #000000; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; transition: background-color 0.3s ease;">
+                    Ver Portafolio
+                </a>
             </div>
         </div>
     </section>
@@ -186,37 +236,44 @@
         </div>
     </section>
 
+    <section id="revistaobra">
+        <div class="content">
+            <h2>RevistaObra</h2>
+            <div class="textos-content" style="text-align: center;">
+                <a href="pdfs/revistaobra.pdf" target="_blank" class="textos-card">
+                    <img src="images/revistaobra.png" alt="RevistaObra" style="width: 100%; max-width: 400px; height: auto; border-radius: 8px; cursor: pointer; transition: transform 0.2s ease;">
+                </a>
+            </div>
+        </div>
+    </section>
+
     <section id="catalogos">
     <div class="content">
-        <h2>]Exposiciones</h2>
+        <h2>Exposiciones</h2>
 
         <div class="catalog-grid">
-            <a href="museo_violeta_parra.pdf" target="_blank" class="catalog-card">
-                <img src="VioletaParra.PNG" alt="Museo Violeta Parra">
+            <div class="catalog-card">
+                <img src="images/VioletaParra.PNG" alt="Museo Violeta Parra" class="catalog-img">
                 <h3>Museo Violeta Parra</h3>
-                <p>Catálogo asociado a la exhibición en el Museo Violeta Parra.</p>
-            </a>
+            </div>
 
-            <a href="KSA8.pdf" target="_blank" class="catalog-card">
-                <img src="KSA8.png" alt="KSA8">
+            <div class="catalog-card">
+                <img src="images/KSA8.jpg" alt="KSA8" class="catalog-img">
                 <h3>KSA8</h3>
-                <p>Catálogo correspondiente al proyecto o exposición en KSA8.</p>
-            </a>
+            </div>
         </div>
 
     </div>
 </section>
 
-    <section id="contacto" >
-        <div class="content">
-            <h2>Contacto</h2>
-            <div class="contact-info">
-    <p>Email: <a href="mailto:nickole.treskow18@gmail.com">nickole.treskow18@gmail.com</a></p>
-    <p>Instagram: <a href="https://instagram.com/blastnickole" target="_blank">@blastnickole</a></p>
-    <p>Ubicación: Santiago, Chile</p>
-</div>
+    <footer id="contacto">
+        <h2>Contacto</h2>
+        <div class="contact-info">
+            <p>Email: <a href="mailto:nickole.treskow18@gmail.com">nickole.treskow18@gmail.com</a></p>
+            <p>Instagram: <a href="https://instagram.com/blastnickole" target="_blank">@blastnickole</a></p>
+            <p>Ubicación: Santiago, Chile</p>
         </div>
-    </section>
+    </footer>
     <div class="lightbox" id="lightbox">
         <div id="lightbox-caption" style="position:absolute; bottom:40px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.6); color:white; padding:10px 20px; border-radius:8px; font-size:16px; max-width:80%; text-align:center;"></div>
         <img src="" alt="Imagen ampliada" id="lightbox-img">
@@ -225,14 +282,25 @@
     <script>
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
-        const images = document.querySelectorAll('.gallery-item img');
+        const galleryImages = document.querySelectorAll('.gallery-item img');
+        const catalogImages = document.querySelectorAll('.catalog-card img');
 
-        images.forEach(img => {
+        // Lightbox para imágenes de la galería
+        galleryImages.forEach(img => {
             img.addEventListener('click', () => {
                 lightbox.classList.add('active');
                 lightboxImg.src = img.src;
                 const caption = img.parentElement.querySelector('.ficha').innerText;
                 document.getElementById('lightbox-caption').innerText = caption;
+            });
+        });
+
+        // Lightbox para imágenes de catálogo
+        catalogImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.classList.add('active');
+                lightboxImg.src = img.src;
+                document.getElementById('lightbox-caption').innerText = img.alt;
             });
         });
 
