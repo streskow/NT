@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nickole Treskow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f3f3f3;
+            padding-top: 0;
+        }
+        header {
+            background-color: #000000;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        nav {
+            text-align: right;
+            margin-right: 40px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .content {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+            .title {
+            font-size: 40px;
+            text-align: left;
+            margin-top: 140px;
+            margin-left: 40px;
+            font-weight: bold;
+            color: #000000;
+        }
+            .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        .ficha {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .gallery-item:hover .ficha {
+            opacity: 1;
+        }
+        /* Carrusel */
+        .carousel-container {
+            position: relative;
+            overflow: visible;
+        }
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        
+        }
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 10;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+        .carousel-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .carousel-prev {
+            left: 10px;
+        }
+        .carousel-next {
+            right: 10px;
+        }
+        .carousel-btn {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .carousel-container:hover .carousel-btn {
+            opacity: 1;
+        }
+            /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .lightbox img {
+            max-width: 100%;
+            max-height: 95%;
+            border-radius: 10px;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .statement-text {
+            text-align: justify;
+            column-count: 1;
+            column-gap: 40px;
+            line-height: 1.6;}
+    .contact-info p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+        }
+        .catalog-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px; }
+.catalog-card { background: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center; color: inherit; transition: transform 0.2s ease; }
+.catalog-card:hover { transform: scale(1.02); }
+.catalog-card img { 
+            width: 100%; 
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px; 
+            display: block;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #000000;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            width: 100%;
+        }
+        footer h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        footer .contact-info {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        footer .contact-info p {
+            color: white;
+        }
+        footer .contact-info a {
+            color: white;
+            text-decoration: underline;
+        }
+        footer .contact-info a:hover {
+            color: #cccccc;
+        }
+        .textos-card {
+            display: inline-block;
+            text-decoration: none;
+        }
+        .textos-card img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Media Queries para dispositivos móviles */
+        @media (max-width: 768px) {
+            nav {
+                text-align: center;
+                margin-right: 0;
+            }
+            nav a {
+                margin: 0 10px;
+                font-size: 14px;
+                display: inline-block;
+            }
+            .title {
+                font-size: 28px;
+                margin-top: 100px;
+                margin-left: 20px;
+            }
+            section {
+                padding: 60px 10px;
+            }
+            .content {
+                padding: 20px;
+                margin: 0 10px;
+            }
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .catalog-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .statement-text {
+                font-size: 16px;
+            }
+            footer .contact-info p {
+                font-size: 16px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .textos-card img {
+                max-width: 100% !important;
+            }
+            .carousel-btn {
+                padding: 8px 12px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav a {
+                font-size: 12px;
+                margin: 0 5px;
+            }
+            .title {
+                font-size: 24px;
+                margin-top: 80px;
+                margin-left: 15px;
+            }
+            section {
+                padding: 40px 5px;
+            }
+            .content {
+                padding: 15px;
+                margin: 0 5px;
+            }
+            .ficha {
+                font-size: 12px;
+                padding: 8px;
+            }
+            footer {
+                padding: 30px 15px;
+            }
+            footer .contact-info p {
+                font-size: 14px;
+            }
+            .carousel-btn {
+                padding: 6px 10px;
+                font-size: 14px;
+            }
+/* Lightbox carrusel */
+.lightbox-carousel {
+    max-width: 95%;
+    max-height: 90%;
+    overflow: hidden;
+}
+
+.lightbox-slides {
+    display: flex;
+    transition: transform 0.4s ease;
+}
+
+.lightbox-slides img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* Botones */
+.lightbox-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    font-size: 28px;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    z-index: 10;
+}
+
+.lightbox-prev { left: 30px; }
+.lightbox-next { right: 30px; }
+
+#lightbox-caption {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    max-width: 80%;
+    text-align: center;
+}
+
+
+            
+        }
+
+
+</style>
+</head>
+<body>
+    <header>
+        
+        <nav>
+            <a href="#portafolio">Portafolio</a>
+            <a href="#statement">Statement</a>
+            <a href="#textos">Textos</a>
+            <a href="#catalogos">Exposiciones</a>
+        </nav>
+        
+    </header>
+
+    <div class="title">Nickole Treskow</div>
+
+    <section id="portafolio">
+        <div class="content">
+            <h2>Portafolio</h2>
+            <div class="gallery">
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra9-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra9.png" alt="Obra 9 - Imagen 1">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-2.png" alt="Obra 9 - Imagen 2">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-3.png" alt="Obra 9 - Imagen 3">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-4.png" alt="Obra 9 - Imagen 4">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-5.png" alt="Obra 9 - Imagen 5">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-6.png" alt="Obra 9 - Imagen 6">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-7.png" alt="Obra 9 - Imagen 7">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra9-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra9-carousel', 1)">❯</button>
+                    </div>
+                    <div class="ficha">Cuerpo De-Presión (final), escultura, tela y metal, exposición colectiva "El Gran Cuaderno" en KSA8, 2025</div>
+                </div>
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra1-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra1.png" alt="Obra 1 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra1-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra1-carousel', 1)">❯</button>
+                    </div>
+                    <div class="ficha">Cuerpo De-Presión (n°2), escultura, tela y metal, 200 x 70 cm, 2025.</div>
+                </div>
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra2-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra2.png" alt="Obra 2 - Imagen 1">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra2-2.png" alt="Obra 2 - Imagen 2">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra2.png" alt="Obra 2 - Imagen 3">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra2-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra2-carousel', 1)">❯</button>
+                    </div>
+                    <div class="ficha">Colegio Católico, escultura, metal, telas, cemento y madera, 2025.</div>
+                </div>
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra3-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra3.JPG" alt="Obra 3 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra3-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra3-carousel', 1)">❯</button>
+                    </div>
+                    <div class="ficha">¿Cómo me explico la muerte?, escultura, madera, metal, telas, tierra y rama de enredadera, 2025.</div>
+                </div>
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra4-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra4.png" alt="Obra 4 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra4-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra4-carousel', 1)">❯</button>
+                    </div>
+                    <div class="ficha">Tenerte, escultura blanda, retazos de ropa y relleno sintético, 170 x 60 cm, 2025.</div>
+                </div>
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra5-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra5.png" alt="Obra 5 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra5-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra5-carousel', 1)">❯</button>
+                    </div>
+                    <div class="ficha">Hablo de ti, escultura instalativa, tela y relleno sintético, 2024.</div>
+                </div>
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra6-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra6.jpg" alt="Obra 6 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra6-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra6-carousel', 1)">❯</button>
+                    </div>
+                    <div class="ficha">Percusión industrial, escultura interactiva, madera, circuito eléctrico, tornillos y martillo, 2024.</div>
+                </div>
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra7-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra7.jpg" alt="Obra 7 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra7-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra7-carousel', 1)">❯</button>
+                    </div>
+                    <div class="ficha">Ventilar el sonido, escultura interactiva, aspas de ventilador, circuito electrónico y madera, 2024.</div>
+                </div>
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra8-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra8.JPG" alt="Obra 8 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra8-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra8-carousel', 1)">❯</button>
+                    </div>
+                    <div class="ficha">Aquí comienzan mis quebrantos (Colaboración con Florencia Hernandez y Francesca Villarroel) Instalación en exposición "La estrella con su contorno/ la piedra con su reflejo", telas y bordados, 2025.</div>
+                </div>
+            </div>
+            <div style="margin-top: 40px; text-align: center;">
+                <a href="pdfs/portafolio.pdf" target="_blank" style="display: inline-block; padding: 12px 24px; background-color: #000000; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; transition: background-color 0.3s ease;">
+                    Ver Portafolio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="statement">
+        <div class="content">
+            <h2>Statement</h2>
+            <p class="statement-text">Mi trabajo artístico surge de la necesidad de explorar y resignificar experiencias personales, como el luto, la depresión, la niñez y la religión. A través de esculturas con materiales como madera, metales y textiles. Utilizo diversas técnicas como la costura, el bordado, la soldadura y el ensamblaje, construyo piezas que se sostienen por sí mismas tanto física como simbólicamente. Cada obra es un proceso introspectivo y terapéutico, donde el hacer se convierte en una vía para comprender lo que atravieso emocionalmente. Me interesa que los materiales conserven su carga intrínseca y que el resultado dialogue con el presente, generando una conexión honesta entre lo íntimo y lo público.</p>
+        </div>
+    </section>
+
+    <section id="textos">
+        <div class="content">
+            <h2>Textos</h2>
+            <div class="textos-content" style="text-align: center;">
+                <a href="pdfs/revistaobra.pdf" target="_blank" class="textos-card">
+                    <img src="images/revistaobra.png" alt="Textos" style="width: 100%; max-width: 300px; height: auto; border-radius: 8px; cursor: pointer; transition: transform 0.2s ease; border: 3px solid #e0e0e0; padding: 5px; background-color: #f5f5f5;">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalogos">
+    <div class="content">
+        <h2>Exposiciones</h2>
+
+        <div class="catalog-grid">
+            <div class="catalog-card">
+                <img src="images/VioletaParra.PNG" alt="Museo Violeta Parra" class="catalog-img">
+                <h3>Museo Violeta Parra</h3>
+            </div>
+
+            <div class="catalog-card">
+                <img src="images/KSA8.jpg" alt="KSA8" class="catalog-img">
+                <h3>KSA8</h3>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <footer id="contacto">
+        <h2>Contacto</h2>
+        <div class="contact-info">
+            <p>Email: <a href="mailto:nickole.treskow18@gmail.com">nickole.treskow18@gmail.com</a></p>
+            <p>Instagram: <a href="https://instagram.com/blastnickole" target="_blank">@blastnickole</a></p>
+            <p>Ubicación: Santiago, Chile</p>
+        </div>
+    </footer>
+    <div class="lightbox" id="lightbox">
+    <button class="lightbox-btn lightbox-prev">❮</button>
+
+    <div class="lightbox-carousel">
+        <div class="lightbox-slides"></div>
+    </div>
+
+    <button class="lightbox-btn lightbox-next">❯</button>
+
+    <div id="lightbox-caption"></div>
+</div>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const galleryImages = document.querySelectorAll('.gallery-item:not(.carousel-container) img');
+        const catalogImages = document.querySelectorAll('.catalog-card img');
+
+        // Lightbox para imágenes de la galería (excluyendo carrusel)
+        galleryImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.classList.add('active');
+                lightboxImg.src = img.src;
+                const caption = img.closest('.gallery-item').querySelector('.ficha').innerText;
+                document.getElementById('lightbox-caption').innerText = caption;
+            });
+        });
+
+        // Lightbox para imágenes del carrusel
+        const carouselImages = document.querySelectorAll('.carousel-slide img');
+        carouselImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.classList.add('active');
+                lightboxImg.src = img.src;
+                const caption = img.closest('.carousel-container').querySelector('.ficha').innerText;
+                document.getElementById('lightbox-caption').innerText = caption;
+            });
+        });
+
+        // Lightbox para imágenes de catálogo
+        catalogImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.classList.add('active');
+                lightboxImg.src = img.src;
+                document.getElementById('lightbox-caption').innerText = img.alt;
+            });
+        });
+
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        // Funciones del carrusel
+function showSlide(carouselId, index) {
+    const carousel = document.getElementById(carouselId);
+    const slides = carousel.querySelectorAll('.carousel-slide');
+
+    if (index >= slides.length) index = 0;
+    if (index < 0) index = slides.length - 1;
+
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+    carousel.dataset.index = index;
+}
+
+function moveCarousel(carouselId, direction) {
+    const carousel = document.getElementById(carouselId);
+    let currentIndex = parseInt(carousel.dataset.index || 0);
+
+    currentIndex += direction;
+    showSlide(carouselId, currentIndex);
+}
+
+        function currentSlide(carouselId, index) {
+            showSlide(carouselId, index);
+        }
+
+        // Ocultar controles cuando solo hay una imagen
+        function hideControlsForSingleImage() {
+            document.querySelectorAll('.carousel-container').forEach(container => {
+                const carousel = container.querySelector('.carousel-slides');
+                const slides = carousel.querySelectorAll('.carousel-slide');
+                const buttons = container.querySelectorAll('.carousel-btn');
+                
+                if (slides.length <= 1) {
+                    buttons.forEach(btn => btn.style.display = 'none');
+                } else {
+                    buttons.forEach(btn => btn.style.display = '');
+                }
+            });
+        }
+
+        // Ejecutar al cargar la página
+        window.addEventListener('DOMContentLoaded', hideControlsForSingleImage);
+        hideControlsForSingleImage();
+let lightboxIndex = 0;
+let lightboxImages = [];
+
+const lightboxSlides = document.querySelector('.lightbox-slides');
+const lightboxCaption = document.getElementById('lightbox-caption');
+
+function openLightboxFromCarousel(container, startIndex) {
+    lightboxImages = Array.from(
+        container.querySelectorAll('.carousel-slide img')
+    ).map(img => img.src);
+
+    lightboxSlides.innerHTML = '';
+    lightboxImages.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        lightboxSlides.appendChild(img);
+    });
+
+    lightboxIndex = startIndex;
+    updateLightbox();
+
+    lightbox.classList.add('active');
+    lightboxCaption.innerText =
+        container.querySelector('.ficha')?.innerText || '';
+}
+
+function updateLightbox() {
+    lightboxSlides.style.transform = `translateX(-${lightboxIndex * 100}%)`;
+}
+
+document.querySelectorAll('.carousel-container').forEach(container => {
+    const imgs = container.querySelectorAll('.carousel-slide img');
+    imgs.forEach((img, index) => {
+        img.addEventListener('click', e => {
+            e.stopPropagation();
+            openLightboxFromCarousel(container, index);
+        });
+    });
+});
+
+document.querySelector('.lightbox-prev').onclick = e => {
+    e.stopPropagation();
+    lightboxIndex =
+        (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+    updateLightbox();
+};
+
+document.querySelector('.lightbox-next').onclick = e => {
+    e.stopPropagation();
+    lightboxIndex =
+        (lightboxIndex + 1) % lightboxImages.length;
+    updateLightbox();
+};
+
+        
+    </script>
+<script>
+    window.history.scrollRestoration = "manual";
+    
+    // Scroll al inicio cuando se carga la página
+    window.addEventListener('load', function() {
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    });
+    
+    // Scroll al inicio cuando se hace clic en enlaces del menú
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+    
+    // Asegurar que la página esté en la parte superior al cargar
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            window.scrollTo(0, 0);
+        });
+    } else {
+        window.scrollTo(0, 0);
+    }
+</script>
+</body>
+</html>
