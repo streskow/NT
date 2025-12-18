@@ -112,8 +112,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+        
         }
         .carousel-slide.active {
             opacity: 1;
@@ -566,29 +565,24 @@
         });
 
         // Funciones del carrusel
-        function showSlide(carouselId, index) {
-            const carousel = document.getElementById(carouselId);
-            const slides = carousel.querySelectorAll('.carousel-slide');
-            
-            if (index >= slides.length) index = 0;
-            if (index < 0) index = slides.length - 1;
-            
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
-            });
-        }
+function showSlide(carouselId, index) {
+    const carousel = document.getElementById(carouselId);
+    const slides = carousel.querySelectorAll('.carousel-slide');
 
-        function moveCarousel(carouselId, direction) {
-            const carousel = document.getElementById(carouselId);
-            const slides = carousel.querySelectorAll('.carousel-slide');
-            let currentIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
-            
-            currentIndex += direction;
-            showSlide(carouselId, currentIndex);
-        }
+    if (index >= slides.length) index = 0;
+    if (index < 0) index = slides.length - 1;
+
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+    carousel.dataset.index = index;
+}
+
+function moveCarousel(carouselId, direction) {
+    const carousel = document.getElementById(carouselId);
+    let currentIndex = parseInt(carousel.dataset.index || 0);
+
+    currentIndex += direction;
+    showSlide(carouselId, currentIndex);
+}
 
         function currentSlide(carouselId, index) {
             showSlide(carouselId, index);
