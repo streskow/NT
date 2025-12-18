@@ -90,6 +90,70 @@
         .gallery-item:hover .ficha {
             opacity: 1;
         }
+        /* Carrusel */
+        .carousel-container {
+            position: relative;
+            overflow: visible;
+        }
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 10;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+        .carousel-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .carousel-prev {
+            left: 10px;
+        }
+        .carousel-next {
+            right: 10px;
+        }
+        .carousel-btn {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .carousel-container:hover .carousel-btn {
+            opacity: 1;
+        }
             /* Lightbox */
         .lightbox {
             position: fixed;
@@ -210,6 +274,10 @@
             .textos-card img {
                 max-width: 100% !important;
             }
+            .carousel-btn {
+                padding: 8px 12px;
+                font-size: 16px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -239,6 +307,10 @@
             footer .contact-info p {
                 font-size: 14px;
             }
+            .carousel-btn {
+                padding: 6px 10px;
+                font-size: 14px;
+            }
         }
 
 
@@ -262,36 +334,136 @@
         <div class="content">
             <h2>Portafolio</h2>
             <div class="gallery">
-                <div class="gallery-item">
-                    <img src="images/Obra1.png" alt="Obra 1">
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra9-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra9.png" alt="Obra 9 - Imagen 1">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-2.png" alt="Obra 9 - Imagen 2">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-3.png" alt="Obra 9 - Imagen 3">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-4.png" alt="Obra 9 - Imagen 4">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-5.png" alt="Obra 9 - Imagen 5">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-6.png" alt="Obra 9 - Imagen 6">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra9-7.png" alt="Obra 9 - Imagen 7">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra9-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra9-carousel', 1)">❯</button>
+                    </div>
+                    <div class="ficha">Cuerpo De-Presión, escultura, tela y metal, exposición colectiva "El Gran Cuaderno" en KSA8, 2025</div>
+                </div>
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra1-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra1.png" alt="Obra 1 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra1-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra1-carousel', 1)">❯</button>
+                    </div>
                     <div class="ficha">Cuerpo De-Presión, escultura, tela y metal, 200 x 70 cm, 2025.</div>
                 </div>
-                <div class="gallery-item">
-                    <img src="images/Obra2.png" alt="Obra 2">
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra2-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra2.png" alt="Obra 2 - Imagen 1">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra2-2.png" alt="Obra 2 - Imagen 2">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Obra2-3.png" alt="Obra 2 - Imagen 3">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra2-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra2-carousel', 1)">❯</button>
+                    </div>
                     <div class="ficha">Colegio Católico, escultura, metal, telas, cemento y madera, 2025.</div>
                 </div>
-                <div class="gallery-item">
-                    <img src="images/Obra3.JPG" alt="Obra 3">
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra3-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra3.JPG" alt="Obra 3 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra3-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra3-carousel', 1)">❯</button>
+                    </div>
                     <div class="ficha">¿Cómo me explico la muerte?, escultura, madera, metal, telas, tierra y rama de enredadera, 2025.</div>
                 </div>
-                <div class="gallery-item">
-                    <img src="images/Obra4.png" alt="Obra 4">
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra4-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra4.png" alt="Obra 4 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra4-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra4-carousel', 1)">❯</button>
+                    </div>
                     <div class="ficha">Tenerte, escultura blanda, retazos de ropa y relleno sintético, 170 x 60 cm, 2025.</div>
                 </div>
-                <div class="gallery-item">
-                    <img src="images/Obra5.png" alt="Obra 5">
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra5-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra5.png" alt="Obra 5 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra5-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra5-carousel', 1)">❯</button>
+                    </div>
                     <div class="ficha">Hablo de ti, escultura instalativa, tela y relleno sintético, 2024.</div>
                 </div>
-                <div class="gallery-item">
-                    <img src="images/Obra6.jpg" alt="Obra 6">
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra6-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra6.jpg" alt="Obra 6 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra6-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra6-carousel', 1)">❯</button>
+                    </div>
                     <div class="ficha">Percusión industrial, escultura interactiva, madera, circuito eléctrico, tornillos y martillo, 2024.</div>
                 </div>
-                <div class="gallery-item">
-                    <img src="images/Obra7.jpg" alt="Obra 7">
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra7-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra7.jpg" alt="Obra 7 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra7-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra7-carousel', 1)">❯</button>
+                    </div>
                     <div class="ficha">Ventilar el sonido, escultura interactiva, aspas de ventilador, circuito electrónico y madera, 2024.</div>
                 </div>
-                <div class="gallery-item">
-                    <img src="images/Obra8.JPG" alt="Obra 8">
+                <div class="gallery-item carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="obra8-carousel">
+                            <div class="carousel-slide active">
+                                <img src="images/Obra8.JPG" alt="Obra 8 - Imagen 1">
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" onclick="moveCarousel('obra8-carousel', -1)">❮</button>
+                        <button class="carousel-btn carousel-next" onclick="moveCarousel('obra8-carousel', 1)">❯</button>
+                    </div>
                     <div class="ficha">Aquí comienzan mis quebrantos (Colaboración con Florencia Hernandez y Francesca Villarroel) Instalación en exposición "La estrella con su contorno/ la piedra con su reflejo", telas y bordados, 2025.</div>
                 </div>
             </div>
@@ -356,15 +528,26 @@
     <script>
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
-        const galleryImages = document.querySelectorAll('.gallery-item img');
+        const galleryImages = document.querySelectorAll('.gallery-item:not(.carousel-container) img');
         const catalogImages = document.querySelectorAll('.catalog-card img');
 
-        // Lightbox para imágenes de la galería
+        // Lightbox para imágenes de la galería (excluyendo carrusel)
         galleryImages.forEach(img => {
             img.addEventListener('click', () => {
                 lightbox.classList.add('active');
                 lightboxImg.src = img.src;
-                const caption = img.parentElement.querySelector('.ficha').innerText;
+                const caption = img.closest('.gallery-item').querySelector('.ficha').innerText;
+                document.getElementById('lightbox-caption').innerText = caption;
+            });
+        });
+
+        // Lightbox para imágenes del carrusel
+        const carouselImages = document.querySelectorAll('.carousel-slide img');
+        carouselImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.classList.add('active');
+                lightboxImg.src = img.src;
+                const caption = img.closest('.carousel-container').querySelector('.ficha').innerText;
                 document.getElementById('lightbox-caption').innerText = caption;
             });
         });
@@ -381,6 +564,54 @@
         lightbox.addEventListener('click', () => {
             lightbox.classList.remove('active');
         });
+
+        // Funciones del carrusel
+        function showSlide(carouselId, index) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            
+            if (index >= slides.length) index = 0;
+            if (index < 0) index = slides.length - 1;
+            
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function moveCarousel(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            let currentIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
+            
+            currentIndex += direction;
+            showSlide(carouselId, currentIndex);
+        }
+
+        function currentSlide(carouselId, index) {
+            showSlide(carouselId, index);
+        }
+
+        // Ocultar controles cuando solo hay una imagen
+        function hideControlsForSingleImage() {
+            document.querySelectorAll('.carousel-container').forEach(container => {
+                const carousel = container.querySelector('.carousel-slides');
+                const slides = carousel.querySelectorAll('.carousel-slide');
+                const buttons = container.querySelectorAll('.carousel-btn');
+                
+                if (slides.length <= 1) {
+                    buttons.forEach(btn => btn.style.display = 'none');
+                } else {
+                    buttons.forEach(btn => btn.style.display = '');
+                }
+            });
+        }
+
+        // Ejecutar al cargar la página
+        window.addEventListener('DOMContentLoaded', hideControlsForSingleImage);
+        hideControlsForSingleImage();
     </script>
 <script>
     window.history.scrollRestoration = "manual";
