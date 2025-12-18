@@ -310,6 +310,58 @@
                 padding: 6px 10px;
                 font-size: 14px;
             }
+/* Lightbox carrusel */
+.lightbox-carousel {
+    max-width: 95%;
+    max-height: 90%;
+    overflow: hidden;
+}
+
+.lightbox-slides {
+    display: flex;
+    transition: transform 0.4s ease;
+}
+
+.lightbox-slides img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* Botones */
+.lightbox-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    font-size: 28px;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    z-index: 10;
+}
+
+.lightbox-prev { left: 30px; }
+.lightbox-next { right: 30px; }
+
+#lightbox-caption {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    max-width: 80%;
+    text-align: center;
+}
+
+
+            
         }
 
 
@@ -520,9 +572,16 @@
         </div>
     </footer>
     <div class="lightbox" id="lightbox">
-        <div id="lightbox-caption" style="position:absolute; bottom:40px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.6); color:white; padding:10px 20px; border-radius:8px; font-size:16px; max-width:80%; text-align:center;"></div>
-        <img src="" alt="Imagen ampliada" id="lightbox-img">
+    <button class="lightbox-btn lightbox-prev">❮</button>
+
+    <div class="lightbox-carousel">
+        <div class="lightbox-slides"></div>
     </div>
+
+    <button class="lightbox-btn lightbox-next">❯</button>
+
+    <div id="lightbox-caption"></div>
+</div>
 
     <script>
         const lightbox = document.getElementById('lightbox');
@@ -606,6 +665,61 @@ function moveCarousel(carouselId, direction) {
         // Ejecutar al cargar la página
         window.addEventListener('DOMContentLoaded', hideControlsForSingleImage);
         hideControlsForSingleImage();
+let lightboxIndex = 0;
+let lightboxImages = [];
+
+const lightboxSlides = document.querySelector('.lightbox-slides');
+const lightboxCaption = document.getElementById('lightbox-caption');
+
+function openLightboxFromCarousel(container, startIndex) {
+    lightboxImages = Array.from(
+        container.querySelectorAll('.carousel-slide img')
+    ).map(img => img.src);
+
+    lightboxSlides.innerHTML = '';
+    lightboxImages.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        lightboxSlides.appendChild(img);
+    });
+
+    lightboxIndex = startIndex;
+    updateLightbox();
+
+    lightbox.classList.add('active');
+    lightboxCaption.innerText =
+        container.querySelector('.ficha')?.innerText || '';
+}
+
+function updateLightbox() {
+    lightboxSlides.style.transform = `translateX(-${lightboxIndex * 100}%)`;
+}
+
+document.querySelectorAll('.carousel-container').forEach(container => {
+    const imgs = container.querySelectorAll('.carousel-slide img');
+    imgs.forEach((img, index) => {
+        img.addEventListener('click', e => {
+            e.stopPropagation();
+            openLightboxFromCarousel(container, index);
+        });
+    });
+});
+
+document.querySelector('.lightbox-prev').onclick = e => {
+    e.stopPropagation();
+    lightboxIndex =
+        (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+    updateLightbox();
+};
+
+document.querySelector('.lightbox-next').onclick = e => {
+    e.stopPropagation();
+    lightboxIndex =
+        (lightboxIndex + 1) % lightboxImages.length;
+    updateLightbox();
+};
+
+        
     </script>
 <script>
     window.history.scrollRestoration = "manual";
